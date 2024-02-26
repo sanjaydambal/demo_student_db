@@ -14,7 +14,15 @@ const Student = () => {
                 console.log(err);
             });
     }, []);
-
+const handleDelete = (id) => {
+    axios.delete(`http://localhost:7000/delete/${id}`)
+    .then(res => {
+        setStudents(students.filter(student => student.id!== id));
+     })
+     .catch(err => {
+        console.log(err);
+      })
+    }
     return (
         <div className="d-flex vh-100 bg-primary justify-content-center align-items-center">
             <div className='w-50 bg-white rounded'>
@@ -34,8 +42,8 @@ const Student = () => {
                                     <td>{student.name}</td>
                                     <td>{student.email}</td>
                                     <td>
-                                        <button className="btn btn-primary">Edit</button>
-                                        <button className="btn btn-danger">Delete</button>
+                                        <Link to={`update/${student.id}`} className="btn btn-primary">Edit</Link>
+                                        <button className="btn btn-danger" onClick={(e)=> handleDelete(student.id)}>Delete</button>
                                     </td>
                                 </tr>
                             ))
@@ -47,4 +55,4 @@ const Student = () => {
     );
 };
 
-export default Student;
+export default Student
